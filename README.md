@@ -22,6 +22,24 @@ A performant React Native application that displays a large list of stock ticker
 
 ---
 
+### Screenshots
+
+**Light Theme**
+
+![Light Theme Nasdaq Browser](assets/screenshots/android-light.png)
+![Light Theme Nasdaq Browser](assets/screenshots/ios-light.png)
+
+**Dark Theme**
+
+![Dark Theme Nasdaq Browser](assets/screenshots/android-dark.png)
+![Dark Theme Nasdaq Browser](assets/screenshots/ios-dark.png)
+
+**Price Change Animation**
+
+![Record](assets/screenshots/record.gif)
+
+---
+
 ## 📁 Project Structure
 ```
 ├── assets/ # Fonts, images, and static files

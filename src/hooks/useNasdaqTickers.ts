@@ -4,7 +4,7 @@ import { fetchNasdaqTickers, getCursorFromUrl } from '@services';
 import { queryClient } from '../../App';
 
 export function useNasdaqTickers(search: string) {
-  const q = useDebouncedValue(search.trim(), 1000);
+  const q = useDebouncedValue(search.toLowerCase().trim(), 1000);
   const query = useInfiniteQuery({
     queryKey: ['nasdaq-tickers', q],
     queryFn: ({ pageParam }) =>
