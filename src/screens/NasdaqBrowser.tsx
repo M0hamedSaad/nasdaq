@@ -1,4 +1,6 @@
 import {
+  EmptyStockList,
+  ExceedLimit,
   Header,
   Input,
   Screen,
@@ -34,8 +36,15 @@ export default function NasdaqBrowser() {
     setViewableTickers(visible as string[]);
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } =
-    useNasdaqTickers(query);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isFetching,
+    error,
+    isFetched,
+  } = useNasdaqTickers(query);
 
   const filteredTickers: StockItem[] = useMemo(() => {
     const items: StockItem[] = [];
@@ -65,7 +74,7 @@ export default function NasdaqBrowser() {
   useMockWs(bufferedTickers);
 
   return (
-    <Screen style={styles.container}>
+    <Screen>
       {/* Header with Input Search */}
       <Header>
         <Input
@@ -76,7 +85,7 @@ export default function NasdaqBrowser() {
       </Header>
       {isFetching && !hasNextPage && <StockRowSkeleton />}
       {/* Tickers */}
-      {!!filteredTickers.length && (
+      {isFetched && (
         <FlashList
           ref={flashListRef}
           onViewableItemsChanged={onViewableItemsChanged}
@@ -85,15 +94,24 @@ export default function NasdaqBrowser() {
           data={filteredTickers}
           keyExtractor={(item, index) => item.ticker + `_${index}`}
           onEndReached={() => {
+            console.log('onEndReached');
             if (hasNextPage && !isFetchingNextPage) fetchNextPage();
           }}
-          onEndReachedThreshold={0.3}
+          onEndReachedThreshold={0.1}
           renderItem={({ item, index }) => (
             <StockRow item={item} index={index} />
           )}
+          ListEmptyComponent={isFetching ? null : <EmptyStockList />}
           ItemSeparatorComponent={() => <View style={styles.divider} />}
           ListFooterComponent={
-            isFetchingNextPage && hasNextPage ? <StockRowSkeleton /> : null
+            <>
+              {isFetchingNextPage && hasNextPage ? <StockRowSkeleton /> : null}
+              {!isFetchingNextPage &&
+                hasNextPage &&
+                error?.message.includes('429') && (
+                  <ExceedLimit onRefresh={fetchNextPage} />
+                )}
+            </>
           }
         />
       )}
@@ -103,7 +121,6 @@ export default function NasdaqBrowser() {
 
 const styleFn = (_: StyleFnParams) =>
   StyleSheet.create({
-    container: {},
     statusBarBg: { backgroundColor: _.theme.primary },
     divider: { height: 2, backgroundColor: _.theme.surface },
   });

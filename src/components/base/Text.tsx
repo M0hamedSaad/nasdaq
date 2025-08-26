@@ -3,6 +3,7 @@ import { useStyles } from '@hooks';
 import { useAppConfigStore } from '@store';
 import { PALETTE, type Theme } from '@themes';
 import type { StyleFnParams } from '@types';
+import { fontSize } from '@utils';
 import {
   Text as RNText,
   StyleSheet,
@@ -17,7 +18,6 @@ type TextProps = {
 const Text = ({ weight, color, center, ...props }: TextProps) => {
   const styles = useStyles(styleFn);
   const theme = useAppConfigStore(state => state.theme);
-  // const lang = useAppConfigStore(state => state.language);
 
   return (
     <RNText
@@ -43,6 +43,7 @@ const styleFn = (_: StyleFnParams) =>
   StyleSheet.create({
     text: {
       textAlign: _.isRtl ? 'right' : 'left',
+      fontSize: fontSize(14),
     },
     center: {
       textAlign: 'center',

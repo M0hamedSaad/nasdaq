@@ -1,29 +1,5 @@
-export const PALETTE = {
-  light: {
-    bg: '#FFFFFF',
-    surface: '#F7F9FB',
-    text: '#1B1B1B',
-    textMuted: '#4A4A4A',
-    border: '#D1D5DA',
-    primary: '#0074CE',
-    up: '#16A34A',
-    down: '#DC2626',
-    white: '#ffffff',
-    shadow: '#000000',
-  },
-  dark: {
-    bg: '#0A0A0A',
-    surface: '#1C1C1E',
-    text: '#FFFFFF',
-    textMuted: '#B0B0B0',
-    border: '#2C2C2E',
-    primary: '#5AB8F5',
-    up: '#22C55E',
-    down: '#F87171',
-    white: '#ffffff',
-    shadow: '#B0B0B0',
-  },
-};
+import { PALETTE } from './palette';
 
 export type ThemeType = 'light' | 'dark';
 export type Theme = typeof PALETTE.light;
+export * from './palette';

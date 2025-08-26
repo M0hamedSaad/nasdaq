@@ -1,12 +1,12 @@
 import { useStyles } from '@hooks';
 import { StockItem, StyleFnParams } from '@types';
-import { fontSize, px } from '@utils';
+import { px } from '@utils';
 import React, { memo } from 'react';
 import { StyleSheet } from 'react-native';
-import Text from '../base/Text';
-import View from '../base/View';
+
 import PriceCell from './PriceCell';
 import StockImage from './StockImage';
+import { Text, View } from '../base';
 interface StockItemProps {
   item: StockItem;
   index: number;
@@ -26,10 +26,10 @@ const StockRow = ({ item }: StockItemProps) => {
         <StockImage ticker={item.ticker} />
         {/* Stock Details */}
         <View style={styles.stockDetails}>
-          <Text style={{ fontSize: fontSize(14) }} weight="SEMI_BOLD">
+          <Text style={styles.ticker} weight="SEMI_BOLD">
             {item.ticker}
           </Text>
-          <Text color="textMuted" numberOfLines={1}>
+          <Text weight="LIGHT" color="textMuted" numberOfLines={1}>
             {item.name}
           </Text>
         </View>
@@ -58,5 +58,5 @@ const styleFn = (_: StyleFnParams) =>
     stockDetails: {
       flex: 1,
     },
-    text: { fontSize: 12 },
+    ticker: { marginBottom: px(-6) },
   });

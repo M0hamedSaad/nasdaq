@@ -1,5 +1,5 @@
 import { ENV } from '@constants';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Platform } from 'react-native';
 
 const HttpClient = axios.create({
@@ -23,9 +23,9 @@ HttpClient.interceptors.response.use(
     console.log('[HttpClient] response', res);
     return res;
   },
-  error => {
+  (error: AxiosError) => {
     console.log('[HttpClient] error', error);
-    throw error;
+    return Promise.reject(error);
   },
 );
 

@@ -3,16 +3,15 @@ import { StyleFnParams } from '@types';
 import { px } from '@utils';
 import React, { memo, useEffect, useRef } from 'react';
 import { StyleSheet } from 'react-native';
-import Text from '../base/Text';
-import View from '../base/View';
+
 import { useStockStore } from '@store';
+import { Text, View } from '../base';
 interface PriceCellProps {
   ticker: string;
 }
 const PriceCell = ({ ticker }: PriceCellProps) => {
   const styles = useStyles(styleFn);
   const price = useStockStore(s => s.stocks[ticker]?.lastPrice);
-  console.log('PriceCell', ticker);
 
   const prevPriceRef = useRef<number | undefined>(undefined);
 

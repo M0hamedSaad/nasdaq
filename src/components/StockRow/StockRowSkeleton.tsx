@@ -4,8 +4,8 @@ import { px } from '@utils';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import View from '../base/View';
 import { useAppConfigStore } from '@store';
+import { View } from '../base';
 
 const StockRowSkeleton = () => {
   const styles = useStyles(styleFn);
@@ -48,6 +48,7 @@ const styleFn = (_: StyleFnParams) =>
     textContainer: {
       flex: 1,
       marginHorizontal: px(12),
+      alignItems: _.isRtl ? 'flex-end' : 'flex-start',
     },
     symbol: {
       width: px(80),

@@ -4,7 +4,7 @@ import { StyleFnParams } from '@types';
 import { px } from '@utils';
 import React, { useCallback } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import Icon from './base/Icon/Icon';
+import { Icon } from './base';
 
 const ThemeIcon = () => {
   const styles = useStyles(styleFn);

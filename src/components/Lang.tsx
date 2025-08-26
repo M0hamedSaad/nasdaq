@@ -5,7 +5,7 @@ import { StyleFnParams } from '@types';
 import { px } from '@utils';
 import React, { useCallback } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import Text from './base/Text';
+import { Text } from './base';
 
 const Lang = () => {
   const styles = useStyles(styleFn);

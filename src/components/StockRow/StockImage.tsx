@@ -4,9 +4,7 @@ import { StyleFnParams } from '@types';
 import { px } from '@utils';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import Image from '../base/Image';
-import Text from '../base/Text';
-import View from '../base/View';
+import { Image, Text, View } from '../base';
 
 interface StockImageProps {
   ticker: string;

@@ -1,15 +1,14 @@
+import { IMAGES } from '@assets';
+import { useStyles } from '@hooks';
+import { t } from '@localization';
+import { StyleFnParams } from '@types';
+import { fontSize, px } from '@utils';
 import React, { ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
+
 import Lang from './Lang';
 import ThemeIcon from './ThemeIcon';
-import { useStyles } from '@hooks';
-import { StyleFnParams } from '@types';
-import View from './base/View';
-import { fontSize, px } from '@utils';
-import Image from './base/Image';
-import { IMAGES } from '@assets';
-import Text from './base/Text';
-import { t } from '@localization';
+import { Image, Text, View } from './base';
 
 interface HeaderProps {
   children?: ReactNode;
