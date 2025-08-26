@@ -13,12 +13,7 @@ interface StockItemProps {
 }
 const StockRow = ({ item }: StockItemProps) => {
   const styles = useStyles(styleFn);
-  // useEffect(() => {
-  //   console.log(`Index ${index} is mounted [${item.ticker}]`);
-  //   return () => {
-  //     console.log(`Index ${index} is un-mounted [${item.ticker}]`);
-  //   };
-  // }, [item, index]);
+
   return (
     <View style={styles.container}>
       <View style={styles.stockDetailsContainer}>

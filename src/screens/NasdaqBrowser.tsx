@@ -14,7 +14,13 @@ import { FlashList, FlashListRef, ViewToken } from '@shopify/flash-list';
 import { useStockStore } from '@store';
 import { StockItem, StyleFnParams } from '@types';
 import { getBufferedTickers, px } from '@utils';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { StyleSheet } from 'react-native';
 
 export default function NasdaqBrowser() {
@@ -23,18 +29,20 @@ export default function NasdaqBrowser() {
   const [viewableTickers, setViewableTickers] = useState<string[]>([]);
   const setInitialStocks = useStockStore(s => s.setInitialStocks);
   const flashListRef = useRef<FlashListRef<StockItem>>(null);
-  const viewabilityConfig = {
-    itemVisiblePercentThreshold: 50,
-  };
 
-  const onViewableItemsChanged = ({
-    viewableItems,
-  }: {
-    viewableItems: Array<ViewToken<StockItem>>;
-  }) => {
-    const visible = viewableItems.map(vi => vi.item?.ticker).filter(Boolean);
-    setViewableTickers(visible as string[]);
-  };
+  const viewabilityConfig = useMemo(
+    () => ({ itemVisiblePercentThreshold: 1, minimumViewTime: 150 }),
+    [],
+  );
+
+  const onViewableItemsChanged = useCallback(
+    ({ viewableItems }: { viewableItems: Array<ViewToken<StockItem>> }) => {
+      setViewableTickers(
+        viewableItems.map(vi => vi.item?.ticker).filter(Boolean) as string[],
+      );
+    },
+    [],
+  );
 
   const {
     data,
@@ -46,22 +54,28 @@ export default function NasdaqBrowser() {
     isFetched,
   } = useNasdaqTickers(query);
 
-  const filteredTickers: StockItem[] = useMemo(() => {
-    const items: StockItem[] = [];
-    data?.pages.forEach(p => {
-      p.results?.forEach(r => {
-        items.push({ ticker: r.ticker, name: r.name });
-      });
-    });
-    return items;
-  }, [data]);
+  const filteredTickers = useMemo(
+    () =>
+      data?.pages.flatMap(
+        p => p.results?.map(r => ({ ticker: r.ticker, name: r.name })) ?? [],
+      ) ?? [],
+    [data],
+  );
+
+  useEffect(() => {
+    if (filteredTickers.length > 0 && !isFetchingNextPage) {
+      setInitialStocks(filteredTickers);
+    }
+  }, [filteredTickers, setInitialStocks, isFetchingNextPage]);
 
   useEffect(() => {
     if (filteredTickers.length > 0) {
-      console.log('setInitialStocks');
-      setInitialStocks(filteredTickers);
+      // If FlashList hasn't fired yet, assume all items visible
+      setViewableTickers(filteredTickers.map(item => item.ticker));
+    } else {
+      setViewableTickers([]);
     }
-  }, [filteredTickers, setInitialStocks]);
+  }, [filteredTickers]);
 
   const bufferedTickers = useMemo(() => {
     return getBufferedTickers(
@@ -90,11 +104,10 @@ export default function NasdaqBrowser() {
           ref={flashListRef}
           onViewableItemsChanged={onViewableItemsChanged}
           viewabilityConfig={viewabilityConfig}
-          contentContainerStyle={{ paddingTop: px(12), paddingBottom: px(80) }}
+          contentContainerStyle={styles.contentContainerStyle}
           data={filteredTickers}
           keyExtractor={(item, index) => item.ticker + `_${index}`}
           onEndReached={() => {
-            console.log('onEndReached');
             if (hasNextPage && !isFetchingNextPage) fetchNextPage();
           }}
           onEndReachedThreshold={0.1}
@@ -121,6 +134,10 @@ export default function NasdaqBrowser() {
 
 const styleFn = (_: StyleFnParams) =>
   StyleSheet.create({
+    contentContainerStyle: {
+      paddingTop: px(12),
+      paddingBottom: px(80),
+    },
     statusBarBg: { backgroundColor: _.theme.primary },
     divider: { height: 2, backgroundColor: _.theme.surface },
   });

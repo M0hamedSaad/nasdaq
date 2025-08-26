@@ -6,12 +6,19 @@ A performant React Native application that displays a large list of stock ticker
 
 ## 🚀 Features
 
-- 🔍 Search and filter NASDAQ tickers
+- 🔍 Search and filter NASDAQ tickers with instant response
 - 📊 Real-time price updates with mock WebSocket (simulating Polygon.io)
-- ⚡ High-performance list rendering with `@shopify/flash-list`
-- 🧠 State management with `zustand`
-- 🎨 Custom theming & styles with hooks
-- 📱 Optimized for large datasets with visible-only subscription logic
+- ⚡ High-performance list rendering using @shopify/flash-list
+- 🧠 State management with Zustand for scalability and lightweight store
+- 🎨 Custom theming with light/dark mode support
+- 🌐 Localization (AR/EN) without restarting the app
+- 👁 Visible-only subscription logic for WebSocket to optimize performance
+- 🔒 Error handling for rate limits
+- 🧪 Unit tests for utils and App component
+- 📉 Performance enhancements using memoization, debouncing and list virtualization
+- 📱 Responsive UI using scalable layout helpers and safe area handling
+- 🔔 Visual animation for price changes (e.g., flash green/red)
+- 📤 API-ready architecture for integrating with real Polygon.io WebSocket in future
 
 ---
 
@@ -65,35 +72,47 @@ A performant React Native application that displays a large list of stock ticker
 
 ## 🧪 WebSocket Simulation
 
-To avoid Polygon.io subscription requirements, `useMockWs` simulates price updates every second using:
+To avoid Polygon.io subscription requirements, `useMockWs` simulates price updates every 2 secondes using:
 
-- `setInterval`
-- Random price/volume generation
-- Updates the `zustand` store
+- Generating random price/volume changes
+- Using `setInterval` for periodic updates
+- Updating Zustand store and FlashList efficiently
+- Subscribing only to visible items for optimal performance
 
 ---
+## 🧪 Unit Tests
+- The project includes Jest-based tests:
+- Component tests with @testing-library/react-native
+- Utilities tests for helper functions
+---
+## ⚡ Performance Handling
 
+- FlashList: Handles thousands of tickers efficiently
+- Visible subscription logic: Only updates currently visible stocks
+- Debouncing & throttling for user input (search/filter)
+- React.memo, useCallback, useMemo used to prevent unnecessary renders
+- FastImage: Cached image loading
+- Lazy loading & skeleton placeholders
+---
 ## 🧪 TODO 
-
-| Task Description                                                          | ✅ Status  |
-| ------------------------------------------------------------------------- | ---------  |
-| State management setup with `zustand`                                     | ✅ Done    |
-| WebSocket simulation via `useMockWs`                                      | ✅ Done    |
-| Data fetching via `react-query` with caching                              | ✅ Done    |
-| Optimized ticker subscriptions using `FlashList` viewability              | ✅ Done    |
-| Real WebSocket integration (e.g., Polygon.io) - Need subscription plan    | ✅ Done    |
-| Dark/Light mode support                                                   | ✅ Done    |
-| localization (ar/en) without restart                                      | ✅ Done    |
-| Visual animation for price change (e.g., flash green/red)                 | ✅ Done    |
-| Unit tests                                                                | ✅ Done |
-| Sorting feature (price, name, etc.)                                       | 🕐 Planned |
+| Task Description                    | Status     |
+| ----------------------------------- | ---------- |
+| Zustand state management            | ✅ Done     |
+| Mock WebSocket updates              | ✅ Done     |
+| API fetching with React Query       | ✅ Done     |
+| Optimized subscription logic        | ✅ Done     |
+| Dark/Light mode                     | ✅ Done     |
+| Localization (AR/EN)                | ✅ Done     |
+| Price-change animations             | ✅ Done     |
+| Unit testing                        | ✅ Done     |
+| Sorting feature (price, name, etc.) | 🕐 Planned |
 
 ---
 
 ## 🧪 Author 
 
-Name     : Mohamed Saad
-Email    : ms.rndeveloper@email.com
+Name  : Mohamed Saad
+Email : ms.rndeveloper@email.com
 
 ## 📦 Getting Started
 

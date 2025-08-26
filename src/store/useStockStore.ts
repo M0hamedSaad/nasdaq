@@ -17,7 +17,7 @@ export const useStockStore = create<State>(set => ({
           updated[item.ticker] = {
             ticker: item.ticker,
             name: item.name,
-            lastPrice: parseFloat((Math.random() * 1000).toFixed(2)),
+            lastPrice: parseFloat((Math.random() * 500).toFixed(2)),
             volume: Math.floor(Math.random() * 10000),
           };
         } else
