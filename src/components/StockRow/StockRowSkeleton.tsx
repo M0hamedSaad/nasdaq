@@ -1,7 +1,7 @@
 import { useStyles } from '@hooks';
 import { StyleFnParams } from '@types';
 import { px } from '@utils';
-import React from 'react';
+
 import { StyleSheet } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import { useAppConfigStore } from '@store';

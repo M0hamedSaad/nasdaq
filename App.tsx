@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import { initI18n } from '@localization';
 import { Root } from '@navigation';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,6 +5,10 @@ import { useAppConfigStore } from '@store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs([
+  'Your app (or one of its dependencies) is using an outdated JSX transform',
+]);
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: { enabled: false, retry: false },

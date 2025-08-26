@@ -3,7 +3,7 @@ import { useAppConfigStore } from '@store';
 import { PALETTE, Theme } from '@themes';
 import { StyleFnParams } from '@types';
 import { px } from '@utils';
-import React from 'react';
+
 import { StyleSheet } from 'react-native';
 import { IconProps } from 'react-native-vector-icons/Icon';
 import CustomIcon from './CustomIcon';

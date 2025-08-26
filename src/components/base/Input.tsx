@@ -2,7 +2,7 @@ import { FONTS } from '@assets';
 import { useStyles } from '@hooks';
 import { StyleFnParams } from '@types';
 import { fontSize, px } from '@utils';
-import React from 'react';
+
 import { StyleSheet, TextInput, TextInputProps } from 'react-native';
 
 const Input = (props: TextInputProps) => {

@@ -2,7 +2,7 @@ import { useStyles } from '@hooks';
 import { t } from '@localization';
 import { StyleFnParams } from '@types';
 import { px } from '@utils';
-import React from 'react';
+
 import { StyleSheet } from 'react-native';
 import { Button, Icon, Text, View } from './base';
 
